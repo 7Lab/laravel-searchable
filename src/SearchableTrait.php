@@ -1,4 +1,6 @@
-<?php namespace Nicolaslopezj\Searchable;
+<?php
+
+namespace SevenLab\Searchable;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -8,7 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * Trait SearchableTrait
- * @package Nicolaslopezj\Searchable
+ * @package SevenLab\Searchable
  * @property array $searchable
  * @property string $table
  * @property string $primaryKey
@@ -334,7 +336,8 @@ trait SearchableTrait
      * @param float $relevance
      * @return string
      */
-    protected function getCaseCompare($column, $compare, $relevance) {
+    protected function getCaseCompare($column, $compare, $relevance)
+    {
         if ($this->isPostgresqlDatabase()) {
             $field = "LOWER(" . $column . ") " . $compare . " ?";
             return '(case when ' . $field . ' then ' . $relevance . ' else 0 end)';
@@ -351,7 +354,8 @@ trait SearchableTrait
      * @param \Illuminate\Database\Eloquent\Builder $clone
      * @param \Illuminate\Database\Eloquent\Builder $original
      */
-    protected function mergeQueries(Builder $clone, Builder $original) {
+    protected function mergeQueries(Builder $clone, Builder $original)
+    {
         $tableName = DB::connection($this->connection)->getTablePrefix() . $this->getTable();
         if ($this->isPostgresqlDatabase()) {
             $original->from(DB::connection($this->connection)->raw("({$clone->toSql()}) as {$tableName}"));
@@ -362,7 +366,7 @@ trait SearchableTrait
         // First create a new array merging bindings
         $mergedBindings = array_merge_recursive(
             $clone->getBindings(),
-            $original->getBindings()
+            $original->withoutGlobalScopes()->getBindings()
         );
 
         // Then apply bindings WITHOUT global scopes which are already included. If not, there is a strange behaviour

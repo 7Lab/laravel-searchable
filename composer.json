@@ -1,5 +1,5 @@
 {
-    "name": "nicolaslopezj/searchable",
+    "name": "sevenlab/laravel-searchable",
     "description": "Eloquent model search trait.",
     "keywords": ["laravel", "eloquent", "search", "searchable", "database", "model"],
     "license": "MIT",
@@ -7,6 +7,10 @@
         {
             "name": "Nicolas Lopez",
             "email": "nicolaslopezj@me.com"
+        },
+        {
+            "name": "Joey Houtenbos",
+            "email": "joey@7lab.nl"
         }
     ],
     "require": {
@@ -16,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Nicolaslopezj\\Searchable\\": "src/"
+            "SevenLab\\Searchable\\": "src/"
         }
     },
     "minimum-stability": "stable"
